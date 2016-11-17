@@ -29,6 +29,10 @@ app.post('/images', function(req, res) {
     res.sendfile('site/', {root: __dirname })
 });
 
+app.get('/download', function(req, res) {
+	app.use(express.static(__dirname + '/images'));
+    res.download('images/', {root: __dirname })
+});
 //app.use('/public', public);
 
 app.get('/about', middleware.requireAuthentication, function(req, res){
