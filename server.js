@@ -24,6 +24,10 @@ app.get('/', function(req, res) {
     res.sendfile('site/index.html', {root: __dirname })
 });
 
+app.post('/images', function(req, res) {
+	app.use(express.static(__dirname + '/images'));
+    res.sendfile('site/', {root: __dirname })
+});
 
 //app.use('/public', public);
 
