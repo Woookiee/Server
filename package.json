@@ -4,7 +4,9 @@
   "description": "my f#cking server",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "body-parser": "^1.13.3",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {},
   "scripts": {

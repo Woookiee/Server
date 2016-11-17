@@ -20,8 +20,8 @@ app.use(middleware.logger);
 });*/
 
 app.get('/', function(req, res) {
-	app.use(express.static(__dirname + '/templatemo_172_mini'));
-    res.sendfile('templatemo_172_mini/index.html', {root: __dirname })
+	app.use(express.static(__dirname + '/site'));
+    res.sendfile('site/index.html', {root: __dirname })
 });
 
 
