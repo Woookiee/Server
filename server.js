@@ -22,7 +22,7 @@ app.use(middleware.logger);
 
 app.get('/', function(req, res) {
 	app.use(express.static(__dirname + '/template_14'));
-    res.sendfile('template_14/index.html', {root: __dirname })
+    res.sendfile('template_14/index.htm', {root: __dirname })
 });
 
 app.use(bodyParser);
