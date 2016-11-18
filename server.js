@@ -21,8 +21,8 @@ app.use(middleware.logger);
 });*/
 
 app.get('/', function(req, res) {
-	app.use(express.static(__dirname + '/template_14'));
-    res.sendfile('template_14/index.htm', {root: __dirname })
+	app.use(express.static(__dirname + '/templatemo_345_mini_two'));
+    res.sendfile('templatemo_345_mini_two/index.html', {root: __dirname })
 });
 
 app.use(bodyParser);
