@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 var PORT = process.env.PORT || 3000;
 var middleware = {
 	requireAuthentication: function(req, res, next){
@@ -20,19 +21,19 @@ app.use(middleware.logger);
 });*/
 
 app.get('/', function(req, res) {
-	app.use(express.static(__dirname + '/site'));
-    res.sendfile('site/index.html', {root: __dirname })
+	app.use(express.static(__dirname + '/template_14'));
+    res.sendfile('template_14/index.html', {root: __dirname })
 });
 
-app.post('/images', function(req, res) {
-	app.use(express.static(__dirname + '/images'));
-    res.sendfile('site/', {root: __dirname })
+app.use(bodyParser);
+
+app.post('/', function(req, res){
+    console.log(req.body.foo);
+    res.send('ok');
 });
 
-app.get('/download', function(req, res) {
-	app.use(express.static(__dirname + '/images'));
-    res.download('images/', {root: __dirname })
-});
+
+
 //app.use('/public', public);
 
 app.get('/about', middleware.requireAuthentication, function(req, res){
