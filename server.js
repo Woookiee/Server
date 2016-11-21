@@ -1,61 +1,65 @@
 var express = require('express');
-var bodyParser = require('body-parser');
-var _ = require('underscore');
+	var bodyParser = require('body-parser');
+		var _ = require('underscore');
 
 var app = express();
-var PORT = process.env.PORT || 3000;
-var todos = [];
-var todoNextId = 1;
+	var PORT = process.env.PORT || 3000;
+		var cart = []; //your shopping cart
+			var NextMealsID = 1;
 
 app.use(bodyParser.json());
 
 app.get('/', function(req, res){
-	res.send('ToDo API Root');
+	res.send('Example of meals');
 });
 
-// GET /todos
-app.get('/todos', function(req, res){
-	res.json(todos);
+//GET /cart *showing your shopping cart
+
+app.get('/cart', function(req, res){
+	res.json(cart);
 });
 
-// GET /todos/:id
-app.get('/todos/:id', function(req, res){
-	var todoId = parseInt(req.params.id, 10);
-	var matchedTodo = _.findWhere(todos, {id: todoId});
+//GET /cart/:id *showing your meal by ID
 
-	if(matchedTodo){
-		res.json(matchedTodo);
+app.get('/cart/:id', function(req, res){
+	var mealID = parseInt(req.params.id, 10);
+	var matchedMeal = _.findWhere(cart, {id: mealID});
+
+	if(matchedMeal){
+		res.json(matchedMeal);
 	}else{
 		res.status(404).send();
 	}
 });
 
-// POST /todos
+//POST /cart *sending meals to your shopping cart
 
-app.post('/todos', function(req, res){
-	var body = _.pick(req.body, 'description', 'completed');
+app.post('/cart', function(req, res){
+	var body = _.pick(req.body, 'description', 'cost');
 
-	if(!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0){
+	if(!_.isInteger(body.cost) || !_.isString(body.description) || body.description.trim().length === 0){
 		return res.status(400).send();
 	}
 
 	body.description = body.description.trim();
-	body.id = todoNextId++;
+	body.id = NextMealsID++;
 
-	todos.push(body);
+	cart.push(body);
 
 	res.json(body);
 });
 
-app.delete('/todos/:id', function(req,res){
-	var todoId = parseInt(req.params.id,10);
-	var matchedTodo = _.findWhere(todos, {id: todoId});
+//DELETE /cart/:id *removing meals from your shopping cart
 
-	if(!matchedTodo){
-		res.status(404).json({"error": "no todo found with that id"});
+app.delete('/cart/:id', function(req,res){
+	var mealID = parseInt(req.params.id,10);
+	var matchedMeal = _.findWhere(cart, {id: mealID});
+
+	if(!matchedMeal){
+		res.status(404).json({"error": "meal with that ID not found"});
 	}else{
-		todos = _.without(todos, matchedTodo);
-		res.json(matchedTodo);
+		cart = _.without(cart, matchedTodo);
+		res.json(matchedMeal);
 	}
 });
 
