@@ -13,10 +13,16 @@ app.get('/', function(req, res){
 	res.send('Example of meals');
 });
 
-//GET /cart *showing your shopping cart
+//GET /cart *showing your shopping cart total cost
 
 app.get('/cart', function(req, res){
-	res.json(cart);
+	var total = 0;
+
+	for(var i=0; i<cart.length; i++)
+	{
+		total += cart[i].cost;
+	}
+	res.send(JSON.stringify(cart,null,4)+"\n total cost: "+total);
 });
 
 //GET /cart/:id *showing your meal by ID
@@ -54,12 +60,13 @@ app.post('/cart', function(req, res){
 app.delete('/cart/:id', function(req,res){
 	var mealID = parseInt(req.params.id,10);
 	var matchedMeal = _.findWhere(cart, {id: mealID});
+	var MM = JSON.stringify(matchedMeal, null, 4);
 
 	if(!matchedMeal){
 		res.status(404).json({"error": "meal with that ID not found"});
 	}else{
 		cart = _.without(cart, matchedMeal);
-		res.json(matchedMeal);
+		res.send("Meal with ID="+mealID+" has been deleted\n"+ MM)
 	}
 });
 
