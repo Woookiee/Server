@@ -10,7 +10,8 @@ var app = express();
 app.use(bodyParser.json());
 
 app.get('/', function(req, res){
-	res.send('Example of meals');
+	app.use(express.static(__dirname + '/startpage'));
+    res.sendFile('startpage/index.html', {root: __dirname })
 });
 
 //GET /cart *showing your shopping cart total cost
@@ -22,7 +23,7 @@ app.get('/cart', function(req, res){
 	{
 		total += cart[i].cost;
 	}
-	res.send(JSON.stringify(cart,null,4)+"\n total cost: "+total);
+	res.send(JSON.stringify(cart,null,4)+"\n TOTAL COST: "+total);
 });
 
 //GET /cart/:id *showing your meal by ID
@@ -41,13 +42,13 @@ app.get('/cart/:id', function(req, res){
 //POST /cart *sending meals to your shopping cart
 
 app.post('/cart', function(req, res){
-	var body = _.pick(req.body, 'description', 'cost');
+	var body = _.pick(req.body, 'name', 'cost');
 
-	if(!_.isNumber(body.cost) || !_.isString(body.description) || body.description.trim().length === 0){
+	if(!_.isNumber(body.cost) || !_.isString(body.name) || body.name.trim().length === 0){
 		return res.status(400).send();
 	}
 
-	body.description = body.description.trim();
+	body.name = body.name.trim();
 	body.id = NextMealsID++;
 
 	cart.push(body);
