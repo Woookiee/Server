@@ -58,7 +58,7 @@ app.delete('/cart/:id', function(req,res){
 	if(!matchedMeal){
 		res.status(404).json({"error": "meal with that ID not found"});
 	}else{
-		cart = _.without(cart, matchedTodo);
+		cart = _.without(cart, matchedMeal);
 		res.json(matchedMeal);
 	}
 });
