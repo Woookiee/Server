@@ -37,7 +37,7 @@ app.get('/cart/:id', function(req, res){
 app.post('/cart', function(req, res){
 	var body = _.pick(req.body, 'description', 'cost');
 
-	if(!_.isInteger(body.cost) || !_.isString(body.description) || body.description.trim().length === 0){
+	if(!_.isNumber(body.cost) || !_.isString(body.description) || body.description.trim().length === 0){
 		return res.status(400).send();
 	}
 
