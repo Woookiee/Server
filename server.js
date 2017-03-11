@@ -4,8 +4,8 @@ var express = require('express');
 
 var app = express();
 	var PORT = process.env.PORT || 3000;
-		var cart = []; //your shopping cart
-			var NextMealsID = 1;
+	/*	var cart = []; //your shopping cart
+			var NextMealsID = 1;*/
 
 app.use(bodyParser.json());
 
@@ -13,7 +13,7 @@ app.get('/', function(req, res){
 	app.use(express.static(__dirname + '/startpage'));
     res.sendFile('startpage/index.html', {root: __dirname })
 });
-
+/*
 //GET /cart *showing your shopping cart total cost
 
 app.get('/cart', function(req, res){
@@ -69,7 +69,7 @@ app.delete('/cart/:id', function(req,res){
 		cart = _.without(cart, matchedMeal);
 		res.send("Meal with ID="+mealID+" has been deleted\n"+ MM)
 	}
-});
+});*/
 
 app.listen(PORT, function(){
 	console.log('Express listening on port ' + PORT + '!');
